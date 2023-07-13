@@ -7,7 +7,7 @@
           Quasar App
         </q-toolbar-title>
 
-        <button outline rounded @click="logout()">Logout</button>
+        <button outline rounded v-if="isLoggedIn" @click="logout()">Logout</button>
       </q-toolbar>
     </q-header>
 
@@ -22,28 +22,24 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'MainLayout',
-  // data() {
-  //   return localStorage.getItem('username')
-
-  // },
-  // computed: {
-  //   isLoggIn () {
-  //     if ('username'==true) {
-  //       return true
-  //     }
-  //   }
-  // },
+  data () {
+    return {
+      isLoggedIn: false
+    }
+  },
+  mounted () {
+    const accessToken = localStorage.getItem('access_token')
+    if (accessToken) {
+      this.isLoggedIn = true
+    }
+  },
   methods: {
     logout () {
-      console.log('teste')
-      // Remove userData from localStorage
-      // ? You just removed token from localStorage. If you like, you can also make API call to backend to blacklist used token
+      // console.log('teste')
       localStorage.removeItem('access_token')
-
-      // Remove userData from localStorage
-      // localStorage.removeItem('useData')
-
-      this.$router.push('/') // redirecionar para a página de login ou para a rota apropriada
+      localStorage.removeItem('username')
+      this.isLoggedIn = false
+      this.$router.push('/') // redirecionar para a página de login
       alert('Logout realizado com sucesso')
     }
   }

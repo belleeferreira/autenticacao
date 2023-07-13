@@ -31,7 +31,7 @@ export default route(function (/* { store, ssrContext } */) {
     // const isAuthenticated = false
     const token = localStorage.getItem('access_token')
     if (!token && to.name !== 'login') {
-      // redirect the user to the login page
+      // redirecionar o usuario para o login
       next('/login')
     } else {
       next()
