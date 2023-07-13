@@ -27,15 +27,13 @@ export default defineComponent({
       }
 
       msalInstance.loginPopup(loginRequest).then(res => {
-        this.$router.push('/home')
-        alert('Logado com sucesso')
         const userName = res.account.name
         const token = res.accessToken
         localStorage.setItem('access_token', token)
         localStorage.setItem('username', userName)
-        alert(token)
-        console.log(res)
-        // Guardar access (res.accessToken) token e refresh token (res.refreshToken) na store de token/access
+        this.$store.commit('example/someMutation', true)
+        // console.log(res)
+        this.$router.push('/home')
       })
         .catch(erro => console.log(erro))
     }

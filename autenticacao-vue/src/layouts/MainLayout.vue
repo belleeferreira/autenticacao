@@ -7,7 +7,7 @@
           Quasar App
         </q-toolbar-title>
 
-        <button outline rounded v-if="isLoggedIn" @click="logout()">Logout</button>
+        <button v-if="showLogout" outline rounded @click="logout()">Logout</button>
       </q-toolbar>
     </q-header>
 
@@ -24,23 +24,20 @@ export default defineComponent({
   name: 'MainLayout',
   data () {
     return {
-      isLoggedIn: false
     }
   },
-  mounted () {
-    const accessToken = localStorage.getItem('access_token')
-    if (accessToken) {
-      this.isLoggedIn = true
+  computed: {
+    showLogout () {
+      return this.$store.state.example.isLoggedIn
     }
   },
   methods: {
     logout () {
-      // console.log('teste')
       localStorage.removeItem('access_token')
       localStorage.removeItem('username')
-      this.isLoggedIn = false
+      localStorage.setItem('isLoggedIn', '')
+      this.$store.commit('example/someMutation', false)
       this.$router.push('/') // redirecionar para a página de login
-      alert('Logout realizado com sucesso')
     }
   }
 })
