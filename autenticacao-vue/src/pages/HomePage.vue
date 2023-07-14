@@ -10,9 +10,11 @@
 <script>
 import { defineComponent, onMounted, ref } from 'vue'
 import { api } from '../boot/axios'
+import interceptors from '../boot/interceptors'
 export default defineComponent({
   name: 'HomePage',
   setup () {
+    interceptors()
     const pokemons = ref([])
     const fetchPokemons = () =>
       api
